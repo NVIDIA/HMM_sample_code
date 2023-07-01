@@ -1,0 +1,10 @@
+#!/usr/bin/env sh
+set -ex
+
+(
+  cd src
+  bash ticket_lock.cpp    
+  bash atomic_flag.cpp
+  bash file_before.cpp
+  bash file_after.cpp
+)  

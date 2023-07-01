@@ -1,0 +1,12 @@
+#!/usr/bin/env sh
+set -ex
+
+IMG=nvcr.io/nvidia/nvhpc:23.5-devel-cuda12.1-ubuntu22.04
+docker run \
+  --gpus=all \
+  -u $(id -u):$(id -g) \
+  -v $(pwd):/src \
+  -w /src \
+  $IMG \
+  bash -c "set -ex && ./ci/demos"
+  
