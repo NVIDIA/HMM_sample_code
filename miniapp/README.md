@@ -11,4 +11,4 @@ Use the provided `Makefile` to compile the application, which will produce binar
 ./weather_app StartYear EndYear /PATH\_TO\_BINARY\_FILES/
 ```
 
-The application uses HMM to mmap the input binary files and aggregates total precipitation for each hour for all the days in a year across the input year range. It outputs a csv file (`processed_log.csv`) with average monthly precipitation and average per-hour precipitation for each month of the year. The raw accumulated total precipitation for each hour of the year is also saved to file in binary format.
+The application uses HMM to mmap the input binary files and using CUDA computes the total precipitation for each hour for all the days in a year for the input year range. It outputs a csv file (`processed_log.csv`) with average monthly precipitation and average per-hour precipitation for each month of the year. The raw accumulated total precipitation for each hour of the year is also saved to file in binary format.
