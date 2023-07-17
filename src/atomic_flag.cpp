@@ -27,11 +27,11 @@
  * DEALINGS IN THE SOFTWARE.
  */
 #include <algorithm>
-#include <atomic>    
+#include <atomic>
 #include <execution>
-#include <thread>    
 #include <iostream>
-    
+#include <thread>
+
 int main() {
 
   std::atomic<int> flag = 0;
@@ -46,7 +46,8 @@ int main() {
   });
 
   // Wait on the flag
-  while (flag.load() == 0);
+  while (flag.load() == 0)
+    ;
   // Read the message
   std::cout << "CPU read message sent by GPU thread: " << message << std::endl;
 

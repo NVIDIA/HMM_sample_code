@@ -27,26 +27,25 @@
  * DEALINGS IN THE SOFTWARE.
  */
 #include <algorithm>
-#include <atomic>    
+#include <atomic>
 #include <execution>
 #include <iostream>
 #include <ranges>
-#include <thread>    
-    
+#include <thread>
+
 struct ticket_lock {
   std::atomic<uint32_t> ticket = 0;
   std::atomic<uint32_t> lock = 0;
 
   struct guard_t {
     ticket_lock* p;
-    ~guard_t() {
-      p->lock.fetch_add(1, std::memory_order_release);
-    }
+    ~guard_t() { p->lock.fetch_add(1, std::memory_order_release); }
   };
 
   guard_t guard() {
     uint32_t t = ticket.fetch_add(1, std::memory_order_relaxed);
-    while(lock.load(std::memory_order_acquire) != t);
+    while (lock.load(std::memory_order_acquire) != t)
+      ;
     return {this};
   }
 };
@@ -62,8 +61,8 @@ int main() {
     // Start a new thread that launches a GPU kernel
     auto t = std::jthread([&] {
       std::for_each_n(std::execution::par, std::views::iota(0).begin(), gpu_threads, [&](int) {
-	auto g = lock.guard();
-	message += 1; 
+        auto g = lock.guard();
+        message += 1;
       });
     });
 
@@ -72,13 +71,12 @@ int main() {
     threads.reserve(cpu_threads);
     for (int i = 0; i < cpu_threads; ++i) {
       threads.emplace_back([&] {
-	auto g = lock.guard();
-	message += 1;
+        auto g = lock.guard();
+        message += 1;
       });
     }
   } // All threads complete here
 
-    
   // Read the message
   int should = cpu_threads + gpu_threads;
   if (message != should) {
@@ -86,7 +84,6 @@ int main() {
     return 1;
   }
   std::cerr << "SUCESS: message = " << message << " == " << should << " threads" << std::endl;
-  
+
   return 0;
 }
-

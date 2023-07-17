@@ -28,15 +28,15 @@
  */
 #include <algorithm>
 #include <execution>
-#include <fstream>    
+#include <fcntl.h>
+#include <fstream>
 #include <functional>
 #include <iostream>
 #include <ranges>
-#include <span>    
-#include <vector>
+#include <span>
 #include <stdio.h>
 #include <sys/mman.h>
-#include <fcntl.h>
+#include <vector>
 
 void use_data(std::span<char>);
 
@@ -62,20 +62,19 @@ int main(int argc, char* argv[]) {
     abort();
   }
   std::size_t N = std::stoll(argv[1]);
-  
+
   // Generate a file with n elements
   char const* fname = "file_after.txt";
   {
     std::cout << "Generating file with " << N << " bytes..." << std::endl;
     std::ofstream out(fname);
-    if(!out) {  
+    if (!out) {
       std::cerr << "File open failed!" << std::endl;
       abort();
     }
     std::vector<unsigned char> buffer(N);
-    std::for_each_n(std::execution::par, std::views::iota(0).begin(), N, [&](int i) {
-      buffer[i] = (unsigned char)'0' + (unsigned char)i;
-    });
+    std::for_each_n(std::execution::par, std::views::iota(0).begin(), N,
+                    [&](int i) { buffer[i] = (unsigned char)'0' + (unsigned char)i; });
     out.write((const char*)buffer.data(), N);
     out.close();
   }
