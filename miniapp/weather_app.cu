@@ -35,10 +35,11 @@
 #include <unistd.h>
 #include <vector>
 
-#define CUDA_CHECK(err)                                                                                      \
+#define CUDA_CHECK(cmd)                                                                                      \
+  { cudaError_t err = cmd; \
   if (err != cudaSuccess) {                                                                                  \
     std::cout << "CUDA error at " << __LINE__ << " " << cudaGetErrorString(err) << std::endl;                \
-    return -1;                                                                                               \
+    return -1;}                                                                                               \
   }
 
 __constant__ size_t month_day_boundary[13] = {0, 31, 60, 91, 121, 152, 182, 213, 244, 274, 305, 335, 366};
