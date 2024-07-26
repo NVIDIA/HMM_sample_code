@@ -22,5 +22,5 @@ The demos are available in the [`src/`](./src) directory. On systems with docker
 
 See [LICENSE](./LICENSE).
 
-[Simplifying GPU Application Development with HMM (Heterogeneous Memory Management)]: link.
-[CUDA 12.2 Release Notes]: https://docs.nvidia.com/cuda/cuda-toolkit-release-notes/index.html#general-cuda
+[Simplifying GPU Application Development with HMM (Heterogeneous Memory Management)]: https://developer.nvidia.com/blog/simplifying-gpu-application-development-with-heterogeneous-memory-management/
+[CUDA 12.2 Release Notes]: https://docs.nvidia.com/cuda/archive/12.2.2/cuda-toolkit-release-notes/index.html#general-cuda
